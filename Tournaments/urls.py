@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import TournamentListView, TournamentDetailView, MatchDetailView
+from .views import TournamentListView, TournamentDetailView, MatchDetailView, \
+    organizer_tournaments_list, add_participant
 
 
 urlpatterns = [
     path("", TournamentListView.as_view()),
+    path("myTournaments/", organizer_tournaments_list),
     path("tournament/<pk>/", TournamentDetailView.as_view()),
+    path("tournament/<pk>/addParticipant/", add_participant),
     path("match/<pk>/", MatchDetailView.as_view()),
 ]

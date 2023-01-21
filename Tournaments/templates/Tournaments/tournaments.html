@@ -1,23 +1,29 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
-
+{{ title }}
 <table>
     <tr>
         <th>Nazwa</th>
         <th>Opis</th>
         <th>Organizator</th>
         <th>Data</th>
+        {% if manage %}
+        <th>Usuń</th>
+        {% endif %}
     </tr>
     {% for tournament in object_list %}
     {% if user == tournament.organizer %}
-        <tr onclick="location.href='/tournament/{{tournament.id}}'" style="background-color: #1c2e30">
+        <tr style="background-color: #1c2e30">
     {% else %}
-        <tr onclick="location.href='/tournament/{{tournament.id}}'">
+        <tr>
     {% endif %}
-        <td>{{ tournament.name }}</td>
-        <td>{{ tournament.description }}</td>
-        <td>{{ tournament.organizer.username }}</td>
-        <td>{{ tournament.date|date:'d.m.Y H:i' }}</td>
+        <td class="clickable" onclick="location.href='/tournament/{{tournament.id}}'">{{ tournament.name }}</td>
+        <td class="clickable" onclick="location.href='/tournament/{{tournament.id}}'">{{ tournament.description }}</td>
+        <td class="clickable" onclick="location.href='/tournament/{{tournament.id}}'">{{ tournament.organizer.username }}</td>
+        <td class="clickable" onclick="location.href='/tournament/{{tournament.id}}'">{{ tournament.date|date:'d.m.Y H:i' }}</td>
+        {% if manage %}
+        <td><button class="clickable">X</button></td>
+        {% endif %}
     </tr>
     {% endfor %}
 </table>
