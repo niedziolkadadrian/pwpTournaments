@@ -1,3 +1,6 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+
 <h1>{{ object.name }}</h1>
 <p>{{ object.description }}</p>
 <p>{{ object.organizer.username }}</p>
@@ -5,22 +8,52 @@
 
 
 <h2>Uczestnicy</h2>
+<table>
+    <tr>
+        <th>Nazwa</th>
+        {% if object.confirmed is False and user == object.organizer %}
+        <th>Usuń</th>
+        {% endif %}
+    </tr>
 {% for participiant in object.participant_set.all %}
-    <p>{{ participiant.name }} {% if object.confirmed is False and user == object.organizer %} X {% endif %}</p>
+    <tr>
+        <td>{{ participiant.name }}</td>
+        {% if object.confirmed is False and user == object.organizer %}
+        <td><button>X</button></td>
+        {% endif %}
+    </tr>
 {% endfor %}
+</table>
+
 {% if user == object.organizer and object.confirmed is False %}
 <button>Dodaj uczestnika</button>
 <button>Zatwierdź uczestników</button>
 {% endif %}
+
 {% if object.confirmed %}
 <h2>Mecze</h2>
-{% for match in object.match_set.all %}
-    <p>{{ match }} {{match.date|date:'d.m.Y H:i'}} {{ match.player1_score }}:{{ match.player2_score }}
+<table>
+    <tr>
+        <th>Mecz</th>
+        <th>Data</th>
+        <th>Wynik</th>
         {% if user == object.organizer %}
-            <button>Wprowadź wynik</button> X
+        <th>Edytuj wynik</th>
+        <th>Usuń</th>
         {% endif %}
-    </p>
+    </tr>
+{% for match in object.match_set.all %}
+    <tr>
+        <td onclick="location.href='/match/{{match.id}}'">{{ match }}</td>
+        <td onclick="location.href='/match/{{match.id}}'">{{match.date|date:'d.m.Y H:i'}}</td>
+        <td onclick="location.href='/match/{{match.id}}'">{{ match.player1_score }}:{{ match.player2_score }}</td>
+        {% if user == object.organizer %}
+        <td><button>Wprowadź wynik</button></td>
+        <td><button>X</button></td>
+        {% endif %}
+    </tr>
 {% endfor %}
+</table>
 {% if user == object.organizer %}
 <button>Utwórz mecz</button>
 {% endif %}

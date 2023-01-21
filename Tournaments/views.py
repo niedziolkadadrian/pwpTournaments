@@ -18,7 +18,3 @@ class TournamentDetailView(DetailView):
 class MatchDetailView(DetailView):
     model = Match
     template_name = "Tournaments/match.html"
-
-
-def tournament_detail(request, id=1):
-    return HttpResponse(str(id) + "TTTTTT")
