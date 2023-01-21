@@ -1,0 +1,27 @@
+<h1>{{ object.name }}</h1>
+<p>{{ object.description }}</p>
+<p>{{ object.organizer.username }}</p>
+<p>{{ object.date|date:'d.m.Y H:i' }}</p>
+
+
+<h2>Uczestnicy</h2>
+{% for participiant in object.participant_set.all %}
+    <p>{{ participiant.name }} {% if object.confirmed is False and user == object.organizer %} X {% endif %}</p>
+{% endfor %}
+{% if user == object.organizer and object.confirmed is False %}
+<button>Dodaj uczestnika</button>
+<button>Zatwierdź uczestników</button>
+{% endif %}
+{% if object.confirmed %}
+<h2>Mecze</h2>
+{% for match in object.match_set.all %}
+    <p>{{ match }} {{match.date|date:'d.m.Y H:i'}} {{ match.player1_score }}:{{ match.player2_score }}
+        {% if user == object.organizer %}
+            <button>Wprowadź wynik</button> X
+        {% endif %}
+    </p>
+{% endfor %}
+{% if user == object.organizer %}
+<button>Utwórz mecz</button>
+{% endif %}
+{% endif %}

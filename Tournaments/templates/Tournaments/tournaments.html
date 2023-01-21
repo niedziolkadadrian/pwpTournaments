@@ -1,0 +1,24 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+
+<table>
+    <tr>
+        <th>Nazwa</th>
+        <th>Opis</th>
+        <th>Organizator</th>
+        <th>Data</th>
+    </tr>
+    {% for tournament in object_list %}
+    {% if user == tournament.organizer %}
+        <tr onclick="location.href='/tournament/{{tournament.id}}'" style="background-color: #1c2e30">
+    {% else %}
+        <tr onclick="location.href='/tournament/{{tournament.id}}'">
+    {% endif %}
+        <td>{{ tournament.name }}</td>
+        <td>{{ tournament.description }}</td>
+        <td>{{ tournament.organizer.username }}</td>
+        <td>{{ tournament.date|date:'d.m.Y H:i' }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
