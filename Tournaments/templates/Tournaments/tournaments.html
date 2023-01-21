@@ -1,0 +1,7 @@
+<html>
+ <body>
+ {% for tournament in object_list %}
+ <p>{{tournament.name}} {{tournament.description}} {{tournament.organizer.name}} {{tournament.date}}
+ {% endfor %}
+ </body>
+</html>
