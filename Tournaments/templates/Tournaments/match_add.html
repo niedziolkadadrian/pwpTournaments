@@ -3,7 +3,7 @@
 <p>{{ Tournament.organizer.username }}</p>
 <p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
 
-<h1>Dodawanie nowego uczestnika</h1>
+<h1>Dodawanie nowego meczu</h1>
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_table }}

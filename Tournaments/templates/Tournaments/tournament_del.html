@@ -1,11 +1,10 @@
+<h1>Usuwanie turnieju</h1>
+<p>Czy napewno chcesz usunać turniej?</p>
 <h1>{{ Tournament.name }}</h1>
 <p>{{ Tournament.description }}</p>
 <p>{{ Tournament.organizer.username }}</p>
 <p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
-
-<h1>Dodawanie nowego uczestnika</h1>
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_table }}
     <input type="submit" value="Submit">
 </form>

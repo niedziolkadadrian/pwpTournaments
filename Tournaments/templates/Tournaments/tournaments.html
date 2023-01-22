@@ -1,6 +1,11 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
 {{ title }}
+{% if messages %}
+{% for message in messages %}
+<p class="{{ message.tags }}">{{ message }}</p>
+{% endfor %}
+{% endif %}
 <table>
     <tr>
         <th>Nazwa</th>
@@ -22,7 +27,7 @@
         <td class="clickable" onclick="location.href='/tournament/{{tournament.id}}'">{{ tournament.organizer.username }}</td>
         <td class="clickable" onclick="location.href='/tournament/{{tournament.id}}'">{{ tournament.date|date:'d.m.Y H:i' }}</td>
         {% if manage %}
-        <td><button class="clickable">X</button></td>
+        <td><button class="clickable" onclick="location.href='/delTournament/{{tournament.id}}/'">X</button></td>
         {% endif %}
     </tr>
     {% endfor %}

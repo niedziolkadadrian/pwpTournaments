@@ -12,5 +12,13 @@ th, td {
 }
 
 .clickable{
-    cursor:pointer
+    cursor:pointer;
+}
+
+.error{
+    color: red;
+}
+
+.success{
+    color: green;
 }

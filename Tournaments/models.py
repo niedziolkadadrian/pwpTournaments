@@ -11,7 +11,7 @@ class Scoring(models.Model):
     loose_score = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return str(self.name)+" ("+str(self.win_score)+"/"+str(self.tie_score)+"/"+str(self.loose_score)+")"
 
 
 class Tournament(models.Model):
@@ -38,8 +38,8 @@ class Match(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     player1 = models.ForeignKey(Participant, on_delete=models.DO_NOTHING, related_name='player1')
     player2 = models.ForeignKey(Participant, on_delete=models.DO_NOTHING, related_name='player2')
-    player1_score = models.IntegerField()
-    player2_score = models.IntegerField()
+    player1_score = models.IntegerField(default=0)
+    player2_score = models.IntegerField(default=0)
     date = models.DateTimeField(default=datetime.datetime.now())
 
     def __str__(self):

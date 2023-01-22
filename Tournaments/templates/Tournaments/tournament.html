@@ -6,6 +6,11 @@
 <p>{{ object.organizer.username }}</p>
 <p>{{ object.date|date:'d.m.Y H:i' }}</p>
 
+{% if messages %}
+{% for message in messages %}
+<p class="{{ message.tags }}">{{ message }}</p>
+{% endfor %}
+{% endif %}
 
 <h2>Uczestnicy</h2>
 <table>
@@ -15,11 +20,11 @@
         <th>Usuń</th>
         {% endif %}
     </tr>
-{% for participiant in object.participant_set.all %}
+{% for participant in object.participant_set.all %}
     <tr>
-        <td>{{ participiant.name }}</td>
+        <td>{{ participant.name }}</td>
         {% if object.confirmed is False and user == object.organizer %}
-        <td><button>X</button></td>
+        <td><button class="clickable" onclick="location.href='delParticipant/{{participant.id}}/'">X</button></td>
         {% endif %}
     </tr>
 {% endfor %}
@@ -57,4 +62,8 @@
 {% if user == object.organizer %}
 <button class="clickable">Utwórz mecz</button>
 {% endif %}
+{% endif %}
+
+{% if user == object.organizer %}
+<button class="clickable" onclick="location.href='/delTournament/{{ object.id }}/'">Usuń turniej</button>
 {% endif %}
