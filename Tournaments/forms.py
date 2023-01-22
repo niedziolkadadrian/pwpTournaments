@@ -1,4 +1,4 @@
-from django.forms import ModelForm, HiddenInput, DateTimeInput
+from django.forms import ModelForm, HiddenInput, DateTimeInput, ModelChoiceField
 from .models import Participant, Tournament, Match
 
 
@@ -31,6 +31,11 @@ class TournamentForm(ModelForm):
 
 
 class MatchForm(ModelForm):
+    def __init__(self, tournament, *args, **kwargs):
+        super(MatchForm, self).__init__(*args, **kwargs)
+        self.fields['player1'].queryset = Participant.objects.filter(tournament=tournament)
+        self.fields['player2'].queryset = Participant.objects.filter(tournament=tournament)
+
     class Meta:
         model = Match
         fields = ["player1", "player2", "date", "tournament"]
@@ -44,3 +49,21 @@ class MatchForm(ModelForm):
             "date": "Data meczu",
         }
 
+
+class MatchScoreForm(ModelForm):
+    class Meta:
+        model = Match
+        fields = ["player1_score", "player2_score"]
+        labels = {
+            "player1_score": "Wynik pierwszego uczestnika",
+            "player2_score": "Wynik drugiego uczestnika",
+        }
+
+
+class ConfirmParticipantsForm(ModelForm):
+    class Meta:
+        model = Tournament
+        fields = ["confirmed"]
+        widgets = {
+            "confirmed": HiddenInput(),
+        }

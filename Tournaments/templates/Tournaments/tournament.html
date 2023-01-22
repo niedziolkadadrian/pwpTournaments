@@ -31,8 +31,8 @@
 </table>
 
 {% if user == object.organizer and object.confirmed is False %}
-<button onclick="location.href='addParticipant/'">Dodaj uczestnika</button>
-<button>Zatwierdź uczestników</button>
+<button class="clickable" onclick="location.href='addParticipant/'">Dodaj uczestnika</button>
+<button class="clickable" onclick="location.href='confirmParticipants/'">Zatwierdź uczestników</button>
 {% endif %}
 
 {% if object.confirmed %}
@@ -53,14 +53,14 @@
         <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{match.date|date:'d.m.Y H:i'}}</td>
         <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{ match.player1_score }}:{{ match.player2_score }}</td>
         {% if user == object.organizer %}
-        <td><button class="clickable">Wprowadź wynik</button></td>
-        <td><button class="clickable">X</button></td>
+        <td><button class="clickable" onclick="location.href='/match/{{ match.id }}/setScore/'">Wprowadź wynik</button></td>
+        <td><button class="clickable" onclick="location.href='/delMatch/{{ match.id }}/'">X</button></td>
         {% endif %}
     </tr>
 {% endfor %}
 </table>
 {% if user == object.organizer %}
-<button class="clickable">Utwórz mecz</button>
+<button class="clickable" onclick="location.href='addMatch/'">Utwórz mecz</button>
 {% endif %}
 {% endif %}
 

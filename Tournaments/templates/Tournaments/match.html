@@ -1,8 +1,17 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+
 <h1>{{ object.tournament}}</h1>
 <h2>{{ object.tournament.organizer}}</h2>
+{% if messages %}
+{% for message in messages %}
+<p class="{{ message.tags }}">{{ message }}</p>
+{% endfor %}
+{% endif %}
 <h1>{{ object }}</h1>
 <p>{{ object.player1_score }}:{{ object.player2_score }}</p>
 <p>{{ object.date}}</p>
 {% if user == object.tournament.organizer %}
-<button>Wprowadz wynik</button>
+<button onclick="location.href='/match/{{ match.id }}/setScore/'">Wprowadz wynik</button>
 {% endif %}
+<button class="clickable" onclick="location.href='/tournament/{{ object.tournament.id }}/'">Wroć do turnieju</button>
