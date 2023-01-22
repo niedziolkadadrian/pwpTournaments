@@ -1,0 +1,15 @@
+<table>
+    <tr>
+        <th>Uczestnik</th>
+        <th>Punkty</th>
+        <th>Wyniki meczów</th>
+    </tr>
+    {% for participant in participants %}
+    <tr>
+        <td>{{ participant.participant }}</td>
+        <td>{{ participant.score }}</td>
+        <td>{{ participant.results }}</td>
+    </tr>
+
+    {% endfor %}
+</table>

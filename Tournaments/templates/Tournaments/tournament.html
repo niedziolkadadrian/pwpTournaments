@@ -1,5 +1,6 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <h1>{{ object.name }}</h1>
 <p>{{ object.description }}</p>
@@ -11,6 +12,11 @@
 <p class="{{ message.tags }}">{{ message }}</p>
 {% endfor %}
 {% endif %}
+
+<p>Zasady:</p>
+<p>Punkty za wygraną: {{object.rules.win_score}}</p>
+<p>Punkty za remis: {{object.rules.tie_score}}</p>
+<p>Punkty za przegraną: {{object.rules.loose_score}}</p>
 
 <h2>Uczestnicy</h2>
 <table>
@@ -64,6 +70,24 @@
 {% endif %}
 {% endif %}
 
+<h2>Tabela Wyników</h2>
+<div id="scoreboard-container"></div>
+<button id="update-button" class="clickable">Odśwież table wyników</button>
+
 {% if user == object.organizer %}
-<button class="clickable" onclick="location.href='/delTournament/{{ object.id }}/'">Usuń turniej</button>
+<button  class="clickable" onclick="location.href='/delTournament/{{ object.id }}/'">Usuń turniej</button>
 {% endif %}
+<script>
+    function updateScoreboard() {
+        console.log("COS");
+        $.ajax({
+            url: '/tournament/{{ object.id }}/scoreboard/',
+            type: 'GET',
+            success: function (data) {
+                console.log(data);
+                $("#scoreboard-container").html(data);
+            }
+        });
+    }
+    $("#update-button").click(updateScoreboard);
+</script>

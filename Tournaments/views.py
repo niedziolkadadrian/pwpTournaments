@@ -144,7 +144,7 @@ def add_match(request, pk):
         # check whether it's valid:
         if form.is_valid():
             m = form.save()
-            messages.success(request, "Pomyślnie dodano uczestnika: " + str(m) + "!")
+            messages.success(request, "Pomyślnie dodano mecz: " + str(m) + "!")
             return redirect(f'/tournament/{pk}/')
     else:
         form = MatchForm(tournament=tournament, initial={"date": datetime.datetime.now(), "tournament": pk})
@@ -187,10 +187,53 @@ def upd_match(request, pk):
         # check whether it's valid:
         if form.is_valid():
             m = form.save()
-            messages.success(request, "Pomyślnie zaktualizowano wynik: " + str(m) +
+            messages.success(request, "Pomyślnie zaktualizowano wynik meczu: " + str(m) +
                              " (" + str(m.player1_score) + ":" + str(m.player2_score) + ")!")
             return redirect(f'/match/{pk}/')
     else:
         form = MatchScoreForm(instance=match)
     context = {"form": form, "pk": pk, "Tournament": tournament, "match": match}
     return render(request, "Tournaments/match_upd.html", context)
+
+
+def get_participant_results(tournament, participant):
+    results = []
+    for match in tournament.match_set.all():
+        if match.player1 == participant:
+            result = "tie"
+            if match.player1_score > match.player2_score:
+                result = "win"
+            elif match.player1_score < match.player2_score:
+                result = "loose"
+            results.append({"match": match, "result": result})
+        elif match.player2 == participant:
+            result = "tie"
+            if match.player1_score > match.player2_score:
+                result = "loose"
+            elif match.player1_score < match.player2_score:
+                result = "win"
+            results.append({"match": match, "result": result})
+    return results
+
+
+def calculate_points(participant, results, scoring):
+    score = 0
+    for result in results:
+        if result["result"] == "win":
+            score += scoring.win_score
+        elif result["result"] == "tie":
+            score += scoring.tie_score
+        elif result["result"] == "loose":
+            score += scoring.loose_score
+    return score
+
+
+def get_scoreboard(request, pk):
+    tournament = get_object_or_404(Tournament, pk=pk)
+    scoring = tournament.rules
+    context = {"participants": []}
+    for participant in tournament.participant_set.all():
+        results = get_participant_results(tournament, participant)
+        score = calculate_points(participant, results, scoring)
+        context["participants"].append({"participant": participant, "score": score, "results": results})
+    return render(request, "Tournaments/scoreboard.html", context)

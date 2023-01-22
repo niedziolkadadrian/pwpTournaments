@@ -28,6 +28,7 @@ urlpatterns = [
     path("tournament/<pk>/addParticipant/", add_participant),
     path("tournament/<tournament_id>/delParticipant/<pk>/", del_participant),
     path("tournament/<pk>/confirmParticipants/", confirm_participants),
+    path("tournament/<pk>/scoreboard/", get_scoreboard),
 
     path("match/<pk>/", MatchDetailView.as_view()),
     path("tournament/<pk>/addMatch/", add_match),
