@@ -1,0 +1,15 @@
+<h1>{{ Tournament.name }}</h1>
+<p>{{ Tournament.description }}</p>
+<p>{{ Tournament.organizer.username }}</p>
+<p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
+
+<h1>Usuwanie meczu</h1>
+<p>Czy napewno chcesz usunać mecz?</p>
+<p>{{ match }}</p>
+<p>{{ match.player1_score }}:{{ match.player2_score }}</p>
+<p>{{ match.date|date:'d.m.Y H:i' }}</p>
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Submit">
+</form>
+<button class="clickable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>

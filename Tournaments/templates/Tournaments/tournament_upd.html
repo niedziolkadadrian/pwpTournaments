@@ -1,0 +1,27 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+
+<h1>{{ Tournament.name }}</h1>
+<p>{{ Tournament.description }}</p>
+<p>{{ Tournament.organizer.username }}</p>
+<p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
+
+<h1>Zatwierdzanie uczestników turnieju</h1>
+<p>Czy na pewno chcesz zatwierdzić aktualną listę uczestników?</p>
+<h2>Uczestnicy</h2>
+<table>
+    <tr>
+        <th>Nazwa</th>
+    </tr>
+{% for participant in Tournament.participant_set.all %}
+    <tr>
+        <td>{{ participant.name }}</td>
+    </tr>
+{% endfor %}
+</table>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input type="submit" value="Submit">
+</form>
+<button class="clickable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
