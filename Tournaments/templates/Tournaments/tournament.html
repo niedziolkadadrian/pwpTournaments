@@ -1,5 +1,6 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}"
+      xmlns="http://www.w3.org/1999/html">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <h1>{{ object.name }}</h1>
@@ -18,61 +19,72 @@
 <p>Punkty za remis: {{object.rules.tie_score}}</p>
 <p>Punkty za przegraną: {{object.rules.loose_score}}</p>
 
-<h2>Uczestnicy</h2>
-<table>
-    <tr>
-        <th>Nazwa</th>
-        {% if object.confirmed is False and user == object.organizer %}
-        <th>Usuń</th>
-        {% endif %}
-    </tr>
-{% for participant in object.participant_set.all %}
-    <tr>
-        <td>{{ participant.name }}</td>
-        {% if object.confirmed is False and user == object.organizer %}
-        <td><button class="clickable" onclick="location.href='delParticipant/{{participant.id}}/'">X</button></td>
-        {% endif %}
-    </tr>
-{% endfor %}
-</table>
+<div class="tabs">
+    <input type="radio" name="tab" id="participants" role="tab" checked>
+    <label for="participants">Uczestnicy</label>
+    <section>
+        <table>
+            <tr>
+                <th>Nazwa</th>
+                {% if object.confirmed is False and user == object.organizer %}
+                <th>Usuń</th>
+                {% endif %}
+            </tr>
+        {% for participant in object.participant_set.all %}
+            <tr>
+                <td>{{ participant.name }}</td>
+                {% if object.confirmed is False and user == object.organizer %}
+                <td><button class="clickable" onclick="location.href='delParticipant/{{participant.id}}/'">X</button></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
 
-{% if user == object.organizer and object.confirmed is False %}
-<button class="clickable" onclick="location.href='addParticipant/'">Dodaj uczestnika</button>
-<button class="clickable" onclick="location.href='confirmParticipants/'">Zatwierdź uczestników</button>
-{% endif %}
-
-{% if object.confirmed %}
-<h2>Mecze</h2>
-<table>
-    <tr>
-        <th>Mecz</th>
-        <th>Data</th>
-        <th>Wynik</th>
+        {% if user == object.organizer and object.confirmed is False %}
+        <button class="clickable" onclick="location.href='addParticipant/'">Dodaj uczestnika</button>
+        <button class="clickable" onclick="location.href='confirmParticipants/'">Zatwierdź uczestników</button>
+        {% endif %}
+    </section>
+    {% if object.confirmed %}
+    <input type="radio" name="tab" id="matches" role="tab" checked>
+    <label for="matches">Mecze</label>
+    <section>
+        <table>
+            <tr>
+                <th>Mecz</th>
+                <th>Data</th>
+                <th>Wynik</th>
+                {% if user == object.organizer %}
+                <th>Edytuj wynik</th>
+                <th>Usuń</th>
+                {% endif %}
+            </tr>
+        {% for match in object.match_set.all %}
+            <tr>
+                <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{ match }}</td>
+                <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{match.date|date:'d.m.Y H:i'}}</td>
+                <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{ match.player1_score }}:{{ match.player2_score }}</td>
+                {% if user == object.organizer %}
+                <td><button class="clickable" onclick="location.href='/match/{{ match.id }}/setScore/'">Wprowadź wynik</button></td>
+                <td><button class="clickable" onclick="location.href='/delMatch/{{ match.id }}/'">X</button></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
         {% if user == object.organizer %}
-        <th>Edytuj wynik</th>
-        <th>Usuń</th>
+        <button class="clickable" onclick="location.href='addMatch/'">Utwórz mecz</button>
         {% endif %}
-    </tr>
-{% for match in object.match_set.all %}
-    <tr>
-        <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{ match }}</td>
-        <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{match.date|date:'d.m.Y H:i'}}</td>
-        <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{ match.player1_score }}:{{ match.player2_score }}</td>
-        {% if user == object.organizer %}
-        <td><button class="clickable" onclick="location.href='/match/{{ match.id }}/setScore/'">Wprowadź wynik</button></td>
-        <td><button class="clickable" onclick="location.href='/delMatch/{{ match.id }}/'">X</button></td>
-        {% endif %}
-    </tr>
-{% endfor %}
-</table>
-{% if user == object.organizer %}
-<button class="clickable" onclick="location.href='addMatch/'">Utwórz mecz</button>
-{% endif %}
-{% endif %}
+    </section>
 
-<h2>Tabela Wyników</h2>
-<div id="scoreboard-container"></div>
-<button id="update-button" class="clickable">Odśwież table wyników</button>
+    <input type="radio" name="tab" id="scoreboard" role="tab" checked>
+    <label for="scoreboard">Tabela Wyników</label>
+    <section>
+        <div id="scoreboard-container"></div>
+        <button id="update-button" class="clickable">Odśwież table wyników</button>
+    </section>
+    {% endif %}
+</div>
+
 
 {% if user == object.organizer %}
 <button  class="clickable" onclick="location.href='/delTournament/{{ object.id }}/'">Usuń turniej</button>
@@ -90,4 +102,5 @@
         });
     }
     $("#update-button").click(updateScoreboard);
+    $(document).ready(updateScoreboard);
 </script>

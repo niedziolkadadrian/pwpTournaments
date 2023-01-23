@@ -2,7 +2,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
 
 <h1>{{ object.tournament}}</h1>
-<h2>{{ object.tournament.organizer}}</h2>
+<p>{{ object.tournament.description }}</p>
+<p>{{ object.tournament.organizer.username }}</p>
+<p>{{ object.tournament.date|date:'d.m.Y H:i' }}</p>
 {% if messages %}
 {% for message in messages %}
 <p class="{{ message.tags }}">{{ message }}</p>

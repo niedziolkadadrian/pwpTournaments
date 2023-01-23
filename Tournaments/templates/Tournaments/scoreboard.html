@@ -8,7 +8,34 @@
     <tr>
         <td>{{ participant.participant }}</td>
         <td>{{ participant.score }}</td>
-        <td>{{ participant.results }}</td>
+        <td>{% for result in participant.results %}
+                {% if result.result == 'win' %}
+                    <div class="win tooltip clickable" onclick="location.href='/match/{{result.match.id}}'">&#11044;
+                        <span class="tooltiptext">
+                            <span class="win"><b>Zwycięstwo</b></span><br>
+                            {{result.match}}<br>
+                            {{result.match.player1_score}}:{{result.match.player2_score}}
+                        </span>
+                    </div>
+                {% elif result.result == 'tie' %}
+                    <div class="tie tooltip clickable">&#11044;
+                        <span class="tooltiptext">
+                            <span class="tie"><b>Remis</b></span><br>
+                            {{result.match}}<br>
+                            {{result.match.player1_score}}:{{result.match.player2_score}}
+                        </span>
+                    </div>
+                {% elif result.result == 'loose' %}
+                    <div class="loose tooltip clickable">&#11044;
+                        <span class="tooltiptext">
+                            <span class="loose"><b>Porażka</b></span><br>
+                            {{result.match}}<br>
+                            {{result.match.player1_score}}:{{result.match.player2_score}}
+                        </span>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </td>
     </tr>
 
     {% endfor %}

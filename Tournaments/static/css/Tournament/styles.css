@@ -15,10 +15,58 @@ th, td {
     cursor:pointer;
 }
 
-.error{
+.error, .loose{
     color: red;
 }
-
-.success{
+.success, .win{
     color: green;
+}
+.tie{
+    color: gray;
+}
+/* Tooltips */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  white-space: nowrap;
+  overflow:hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -100px;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+/* Tabs */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tabs > section {
+  order: 999; /* Move content <section> to the end, after the tab labels */
+  width: 100%;
+  display: none; /* Hide all content <section> by default */
+}
+.tabs > input {
+  opacity: 0;   /* hide radio inputs */
+  position: absolute; /* so it doesn't take any space - only it's label will take space */
+}
+.tabs > input[type=radio]:checked + label {
+  background: yellow; /* highlight selected tab label */
+}
+.tabs > input[type=radio]:checked + label + section {
+  display: block; /* Show content <section> of selected
 }

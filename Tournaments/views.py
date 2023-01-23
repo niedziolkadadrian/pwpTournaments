@@ -228,6 +228,7 @@ def calculate_points(participant, results, scoring):
     return score
 
 
+
 def get_scoreboard(request, pk):
     tournament = get_object_or_404(Tournament, pk=pk)
     scoring = tournament.rules
@@ -236,4 +237,6 @@ def get_scoreboard(request, pk):
         results = get_participant_results(tournament, participant)
         score = calculate_points(participant, results, scoring)
         context["participants"].append({"participant": participant, "score": score, "results": results})
+
+    context["participants"].sort(key=lambda participant: participant["score"], reverse=True)
     return render(request, "Tournaments/scoreboard.html", context)
