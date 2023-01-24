@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Tournaments',
+    'Account',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pwpTournaments.wsgi.application'
 
+LOGIN_URL = "/account/login/"
+LOGIN_REDIRECT_URL = 'main'  # przekierowanie do widoku main po zalogowaniu
+LOGOUT_REDIRECT_URL = 'main'  # przekierowanie do widoku main po wylogowaniu
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
