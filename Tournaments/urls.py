@@ -19,9 +19,9 @@ from .views import *
 
 
 urlpatterns = [
-    path("", TournamentListView.as_view()),
-    path("myTournaments/", organizer_tournaments_list),
-    path("tournament/<pk>/", TournamentDetailView.as_view()),
+    path("", TournamentListView.as_view(), name="main"),
+    path("myTournaments/", organizer_tournaments_list, name="my_tournaments"),
+    path("tournament/<pk>/", TournamentDetailView.as_view(), name="tournament"),
     path("addTournament/", add_tournament),
     path("delTournament/<pk>/", del_tournament),
 
@@ -30,7 +30,7 @@ urlpatterns = [
     path("tournament/<pk>/confirmParticipants/", confirm_participants),
     path("tournament/<pk>/scoreboard/", get_scoreboard),
 
-    path("match/<pk>/", MatchDetailView.as_view()),
+    path("match/<pk>/", MatchDetailView.as_view(), name="match"),
     path("tournament/<pk>/addMatch/", add_match),
     path("delMatch/<pk>/", del_match),
     path("match/<pk>/setScore/", upd_match),
