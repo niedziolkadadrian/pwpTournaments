@@ -1,6 +1,8 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+{% extends "Tournaments/main.html" %}
+{% block title %}Mecz{% endblock %}
 
+
+{% block content %}
 <h1>{{ object.tournament}}</h1>
 <p>{{ object.tournament.description }}</p>
 <p>{{ object.tournament.organizer.username }}</p>
@@ -14,6 +16,7 @@
 <p>{{ object.player1_score }}:{{ object.player2_score }}</p>
 <p>{{ object.date}}</p>
 {% if user == object.tournament.organizer %}
-<button onclick="location.href='/match/{{ match.id }}/setScore/'">Wprowadz wynik</button>
+<button class="clickable navigable" onclick="location.href='/match/{{ match.id }}/setScore/'">Wprowadz wynik</button>
 {% endif %}
-<button class="clickable" onclick="location.href='/tournament/{{ object.tournament.id }}/'">Wroć do turnieju</button>
+<button class="clickable navigable" onclick="location.href='/tournament/{{ object.tournament.id }}/'">Przejdź do turnieju</button>
+{% endblock %}

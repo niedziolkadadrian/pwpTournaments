@@ -1,8 +1,8 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}"
-      xmlns="http://www.w3.org/1999/html">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% extends "Tournaments/main.html" %}
+{% block title %}Turniej{% endblock %}
 
+
+{% block content %}
 <h1>{{ object.name }}</h1>
 <p>{{ object.description }}</p>
 <p>{{ object.organizer.username }}</p>
@@ -19,6 +19,10 @@
 <p>Punkty za remis: {{object.rules.tie_score}}</p>
 <p>Punkty za przegraną: {{object.rules.loose_score}}</p>
 
+<button class="clickable navigable" onclick="location.href='{% url 'main' %}'">Lista turniejów</button>
+{% if user.is_authenticated %}
+<button class="clickable navigable" onclick="location.href='{% url 'my_tournaments' %}'">Lista turniejów organizowanych przez ciebie</button>
+{% endif %}
 <div class="tabs">
     <input type="radio" name="tab" id="participants" role="tab" checked>
     <label for="participants">Uczestnicy</label>
@@ -41,8 +45,8 @@
         </table>
 
         {% if user == object.organizer and object.confirmed is False %}
-        <button class="clickable" onclick="location.href='addParticipant/'">Dodaj uczestnika</button>
-        <button class="clickable" onclick="location.href='confirmParticipants/'">Zatwierdź uczestników</button>
+        <button class="clickable navigable" onclick="location.href='addParticipant/'">Dodaj uczestnika</button>
+        <button class="clickable navigable" onclick="location.href='confirmParticipants/'">Zatwierdź listę uczestników</button>
         {% endif %}
     </section>
     {% if object.confirmed %}
@@ -72,7 +76,7 @@
         {% endfor %}
         </table>
         {% if user == object.organizer %}
-        <button class="clickable" onclick="location.href='addMatch/'">Utwórz mecz</button>
+        <button class="clickable navigable" onclick="location.href='addMatch/'">Utwórz mecz</button>
         {% endif %}
     </section>
 
@@ -80,14 +84,14 @@
     <label for="scoreboard">Tabela Wyników</label>
     <section>
         <div id="scoreboard-container"></div>
-        <button id="update-button" class="clickable">Odśwież table wyników</button>
+        <button id="update-button" class="clickable navigable">Odśwież table wyników</button>
     </section>
     {% endif %}
 </div>
 
 
 {% if user == object.organizer %}
-<button  class="clickable" onclick="location.href='/delTournament/{{ object.id }}/'">Usuń turniej</button>
+<button  class="clickable navigable" onclick="location.href='/delTournament/{{ object.id }}/'">Usuń turniej</button>
 {% endif %}
 <script>
     function updateScoreboard() {
@@ -104,3 +108,4 @@
     $("#update-button").click(updateScoreboard);
     $(document).ready(updateScoreboard);
 </script>
+{% endblock %}

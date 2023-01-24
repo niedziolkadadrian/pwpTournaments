@@ -1,5 +1,6 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}" xmlns="http://www.w3.org/1999/html">
+<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+
 {% if messages %}
 {% for message in messages %}
 <p class="{{ message.tags }}">{{ message }}</p>

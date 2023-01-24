@@ -1,6 +1,8 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+{% extends "Tournaments/main.html" %}
+{% block title %}Turniej{% endblock %}
 
+
+{% block content %}
 <h1>{{ Tournament.name }}</h1>
 <p>{{ Tournament.description }}</p>
 <p>{{ Tournament.organizer.username }}</p>
@@ -24,4 +26,5 @@
     {{ form.as_table }}
     <input type="submit" value="Submit">
 </form>
-<button class="clickable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+<button class="clickable navigable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+{% endblock %}

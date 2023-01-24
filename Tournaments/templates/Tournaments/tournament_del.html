@@ -1,3 +1,8 @@
+{% extends "Tournaments/main.html" %}
+{% block title %}Turniej{% endblock %}
+
+
+{% block content %}
 <h1>Usuwanie turnieju</h1>
 <p>Czy napewno chcesz usunać turniej?</p>
 <h1>{{ Tournament.name }}</h1>
@@ -8,4 +13,5 @@
     {% csrf_token %}
     <input type="submit" value="Submit">
 </form>
-<button class="clickable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+<button class="clickable navigable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+{% endblock %}

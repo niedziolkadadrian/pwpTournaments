@@ -1,6 +1,13 @@
+{% extends "Tournaments/main.html" %}
+{% block title %}Turniej{% endblock %}
+
+
+{% block content %}
 <h1>Dodawanie nowego turnieju</h1>
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_table }}
     <input type="submit" value="Submit">
 </form>
+<button class="clickable navigable" onclick="location.href='{% url 'my_tournaments' %}'">Wróć do listy twoich turniejów</button>
+{% endblock %}

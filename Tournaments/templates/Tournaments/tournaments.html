@@ -1,6 +1,12 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
-{{ title }}
+{% extends "Tournaments/main.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block content %}
+{% if manage %}
+<button class="clickable navigable" onclick="location.href='{% url 'main' %}'">Lista turniejów</button>
+<button class="clickable navigable" onclick="location.href='{% url 'add_tournament' %}'">Stwórz nowy turniej</button>
+{% endif %}
 {% if messages %}
 {% for message in messages %}
 <p class="{{ message.tags }}">{{ message }}</p>
@@ -18,7 +24,7 @@
     </tr>
     {% for tournament in object_list %}
     {% if user == tournament.organizer %}
-        <tr style="background-color: #1c2e30">
+        <tr style="background-color: #1f1f23">
     {% else %}
         <tr>
     {% endif %}
@@ -32,4 +38,5 @@
     </tr>
     {% endfor %}
 </table>
+{% endblock %}
 

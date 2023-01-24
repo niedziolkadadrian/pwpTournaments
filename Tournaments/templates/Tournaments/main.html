@@ -1,0 +1,22 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="topbar">
+    <div class="topbar-content">
+        <div class="title">{% block title %}{% endblock %}</div>
+        <div class="user">
+            {% if user.is_authenticated %}
+                <span>{{ user }}</span>
+                <button class="clickable" onclick="location.href='/myTournaments/'">Moje turnieje</button>
+                <button class="clickable" onclick="location.href='/account/logout/'">Wyloguj</button>
+            {% else %}
+                <button class="clickable" onclick="location.href='/account/login/'">Login</button>
+                <button class="clickable" onclick="location.href='/account/register/'">Register</button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="content">
+{% block content %}
+{% endblock %}
+</div>

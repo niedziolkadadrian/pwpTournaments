@@ -1,3 +1,8 @@
+{% extends "Tournaments/main.html" %}
+{% block title %}Mecz{% endblock %}
+
+
+{% block content %}
 <h1>{{ Tournament.name }}</h1>
 <p>{{ Tournament.description }}</p>
 <p>{{ Tournament.organizer.username }}</p>
@@ -11,4 +16,5 @@
     {{ form.as_table }}
     <input type="submit" value="Submit">
 </form>
-<button class="clickable" onclick="location.href='/match/{{ match.id }}/'">Wroć do meczu</button>
+<button class="clickable navigable" onclick="location.href='/match/{{ match.id }}/'">Wroć do meczu</button>
+{% endblock %}
