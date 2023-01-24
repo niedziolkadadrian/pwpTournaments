@@ -18,7 +18,7 @@ class Tournament(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     organizer = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    date = models.DateTimeField(default=datetime.datetime.now())
+    date = models.DateTimeField(default=datetime.datetime.now)
     confirmed = models.BooleanField(default=False)
     rules = models.ForeignKey(Scoring, on_delete=models.DO_NOTHING, blank=True, default=1, null=False)
 
