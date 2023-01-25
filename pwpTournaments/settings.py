@@ -10,12 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-"""
-DANE LOGOWANIA:
-USERNAME:   PASSWORD:
-admin       admin
-inny        zaq1@WSX
-"""
+
 import os
 from pathlib import Path
 
