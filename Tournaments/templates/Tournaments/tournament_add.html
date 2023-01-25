@@ -6,8 +6,10 @@
 <h1>Dodawanie nowego turnieju</h1>
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_table }}
-    <input type="submit" value="Submit">
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit">Stwórz turniej</button>
 </form>
 <button class="clickable navigable" onclick="location.href='{% url 'my_tournaments' %}'">Wróć do listy twoich turniejów</button>
 {% endblock %}

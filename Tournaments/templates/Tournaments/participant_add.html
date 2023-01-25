@@ -3,16 +3,20 @@
 
 
 {% block content %}
-<h1>{{ Tournament.name }}</h1>
-<p>{{ Tournament.description }}</p>
-<p>{{ Tournament.organizer.username }}</p>
-<p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
+<div class="tournament-info">
+    <h1>{{ Tournament.name }}</h1>
+    <p>Opis: <b>{{ Tournament.description }}</b></p>
+    <p>Organizowany przez: <b>{{ Tournament.organizer.username }}</b></p>
+    <p>Data turnieju: <b>{{ Tournament.date|date:'d.m.Y H:i' }}</b></p>
+</div>
 
 <h1>Dodawanie nowego uczestnika</h1>
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_table }}
-    <input type="submit" value="Submit">
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit">Dodaj uczestnika</button>
 </form>
 <button class="clickable navigable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
 {% endblock %}

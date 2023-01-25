@@ -33,7 +33,11 @@
         <td class="clickable" onclick="location.href='/tournament/{{tournament.id}}'">{{ tournament.organizer.username }}</td>
         <td class="clickable" onclick="location.href='/tournament/{{tournament.id}}'">{{ tournament.date|date:'d.m.Y H:i' }}</td>
         {% if manage %}
-        <td><button class="clickable" onclick="location.href='/delTournament/{{tournament.id}}/'">X</button></td>
+        <td style="width:40px; text-align:center">
+            <button class="clickable del_small"
+                    onclick="location.href='/delTournament/{{tournament.id}}/'">X
+            </button>
+        </td>
         {% endif %}
     </tr>
     {% endfor %}

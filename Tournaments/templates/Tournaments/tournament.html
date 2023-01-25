@@ -3,10 +3,12 @@
 
 
 {% block content %}
-<h1>{{ object.name }}</h1>
-<p>{{ object.description }}</p>
-<p>{{ object.organizer.username }}</p>
-<p>{{ object.date|date:'d.m.Y H:i' }}</p>
+<div class="tournament-info">
+    <h1>{{ object.name }}</h1>
+    <p>Opis: <b>{{ object.description }}</b></p>
+    <p>Organizowany przez: <b>{{ object.organizer.username }}</b></p>
+    <p>Data turnieju: <b>{{ object.date|date:'d.m.Y H:i' }}</b></p>
+</div>
 
 {% if messages %}
 {% for message in messages %}
@@ -14,10 +16,6 @@
 {% endfor %}
 {% endif %}
 
-<p>Zasady:</p>
-<p>Punkty za wygraną: {{object.rules.win_score}}</p>
-<p>Punkty za remis: {{object.rules.tie_score}}</p>
-<p>Punkty za przegraną: {{object.rules.loose_score}}</p>
 
 <button class="clickable navigable" onclick="location.href='{% url 'main' %}'">Lista turniejów</button>
 {% if user.is_authenticated %}
@@ -38,7 +36,11 @@
             <tr>
                 <td>{{ participant.name }}</td>
                 {% if object.confirmed is False and user == object.organizer %}
-                <td><button class="clickable" onclick="location.href='delParticipant/{{participant.id}}/'">X</button></td>
+                <td style="width:40px; text-align:center">
+                    <button class="clickable del_small"
+                            onclick="location.href='delParticipant/{{participant.id}}/'">X
+                    </button>
+                </td>
                 {% endif %}
             </tr>
         {% endfor %}
@@ -50,7 +52,7 @@
         {% endif %}
     </section>
     {% if object.confirmed %}
-    <input type="radio" name="tab" id="matches" role="tab" checked>
+    <input type="radio" name="tab" id="matches" role="tab">
     <label for="matches">Mecze</label>
     <section>
         <table>
@@ -69,8 +71,16 @@
                 <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{match.date|date:'d.m.Y H:i'}}</td>
                 <td class="clickable" onclick="location.href='/match/{{match.id}}'">{{ match.player1_score }}:{{ match.player2_score }}</td>
                 {% if user == object.organizer %}
-                <td><button class="clickable" onclick="location.href='/match/{{ match.id }}/setScore/'">Wprowadź wynik</button></td>
-                <td><button class="clickable" onclick="location.href='/delMatch/{{ match.id }}/'">X</button></td>
+                <td style="width:100px; text-align:center">
+                    <button class="clickable set_score"
+                            onclick="location.href='/match/{{ match.id }}/setScore/'">Zmień wynik
+                    </button>
+                </td>
+                <td style="width:40px; text-align:center">
+                    <button class="clickable del_small"
+                            onclick="location.href='/delMatch/{{ match.id }}/'">X
+                    </button>
+                </td>
                 {% endif %}
             </tr>
         {% endfor %}
@@ -80,13 +90,20 @@
         {% endif %}
     </section>
 
-    <input type="radio" name="tab" id="scoreboard" role="tab" checked>
+    <input type="radio" name="tab" id="scoreboard" role="tab">
     <label for="scoreboard">Tabela Wyników</label>
     <section>
         <div id="scoreboard-container"></div>
         <button id="update-button" class="clickable navigable">Odśwież table wyników</button>
     </section>
     {% endif %}
+    <input type="radio" name="tab" id="rules" role="tab">
+    <label for="rules">Zasady</label>
+    <section>
+        <p>Punkty za wygraną: {{object.rules.win_score}}</p>
+        <p>Punkty za remis: {{object.rules.tie_score}}</p>
+        <p>Punkty za przegraną: {{object.rules.loose_score}}</p>
+    </section>
 </div>
 
 

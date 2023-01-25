@@ -3,20 +3,24 @@
 
 
 {% block content %}
-<h1>{{ object.tournament}}</h1>
-<p>{{ object.tournament.description }}</p>
-<p>{{ object.tournament.organizer.username }}</p>
-<p>{{ object.tournament.date|date:'d.m.Y H:i' }}</p>
+<div class="tournament-info">
+    <h1>{{ object.tournament}}</h1>
+    <p>Opis: <b>{{ object.tournament.description }}</b></p>
+    <p>Organizowany przez: <b>{{ object.tournament.organizer.username }}</b></p>
+    <p>Data turnieju: <b>{{ object.tournament.date|date:'d.m.Y H:i' }}</b></p>
+</div>
 {% if messages %}
 {% for message in messages %}
 <p class="{{ message.tags }}">{{ message }}</p>
 {% endfor %}
 {% endif %}
-<h1>{{ object }}</h1>
-<p>{{ object.player1_score }}:{{ object.player2_score }}</p>
-<p>{{ object.date}}</p>
+<div class="tournament-info">
+    <h1>{{ object }}</h1>
+    <p>Wynik: {{ object.player1_score }}:{{ object.player2_score }}</p>
+    <p>Data meczu: {{ object.date|date:'d.m.Y H:i'}}</p>
+</div>
 {% if user == object.tournament.organizer %}
-<button class="clickable navigable" onclick="location.href='/match/{{ match.id }}/setScore/'">Wprowadz wynik</button>
+<button class="clickable navigable" onclick="location.href='/match/{{ match.id }}/setScore/'">Zmień wynik</button>
 {% endif %}
 <button class="clickable navigable" onclick="location.href='/tournament/{{ object.tournament.id }}/'">Przejdź do turnieju</button>
 {% endblock %}
