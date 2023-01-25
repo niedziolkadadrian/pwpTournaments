@@ -40,7 +40,7 @@ class Match(models.Model):
     player2 = models.ForeignKey(Participant, on_delete=models.DO_NOTHING, related_name='player2')
     player1_score = models.IntegerField(default=0)
     player2_score = models.IntegerField(default=0)
-    date = models.DateTimeField(default=datetime.datetime.now())
+    date = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return str(self.player1) + " vs " + str(self.player2)
