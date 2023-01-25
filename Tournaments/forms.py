@@ -1,4 +1,4 @@
-from django.forms import ModelForm, HiddenInput, DateTimeInput, ModelChoiceField
+from django.forms import ModelForm, HiddenInput, DateTimeInput
 from .models import Participant, Tournament, Match
 
 

@@ -1,10 +1,14 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/Tournament/styles.css' %}">
+{% extends "Tournaments/main.html" %}
+{% block title %}Turniej{% endblock %}
 
-<h1>{{ Tournament.name }}</h1>
-<p>{{ Tournament.description }}</p>
-<p>{{ Tournament.organizer.username }}</p>
-<p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
+
+{% block content %}
+<div class="tournament-info">
+    <h1>{{ Tournament.name }}</h1>
+    <p>Opis: <b>{{ Tournament.description }}</b></p>
+    <p>Organizowany przez: <b>{{ Tournament.organizer.username }}</b></p>
+    <p>Data turnieju: <b>{{ Tournament.date|date:'d.m.Y H:i' }}</b></p>
+</div>
 
 <h1>Zatwierdzanie uczestników turnieju</h1>
 <p>Czy na pewno chcesz zatwierdzić aktualną listę uczestników?</p>
@@ -21,7 +25,10 @@
 </table>
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_table }}
-    <input type="submit" value="Submit">
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit">Potwierdź uczestników</button>
 </form>
-<button class="clickable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+<button class="clickable navigable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+{% endblock %}

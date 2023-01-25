@@ -1,14 +1,26 @@
-<h1>{{ Tournament.name }}</h1>
-<p>{{ Tournament.description }}</p>
-<p>{{ Tournament.organizer.username }}</p>
-<p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
+{% extends "Tournaments/main.html" %}
+{% block title %}Mecz{% endblock %}
+
+
+{% block content %}
+<div class="tournament-info">
+    <h1>{{ Tournament.name }}</h1>
+    <p>Opis: <b>{{ Tournament.description }}</b></p>
+    <p>Organizowany przez: <b>{{ Tournament.organizer.username }}</b></p>
+    <p>Data turnieju: <b>{{ Tournament.date|date:'d.m.Y H:i' }}</b></p>
+</div>
 
 <h1>Wprowadzanie wyniku meczu</h1>
-<p>{{ match }}</p>
-<p>{{ match.date|date:'d.m.Y H:i' }}</p>
+<div class="tournament-info">
+    <h1>{{ match }}</h1>
+    <p>Data meczu: {{ match.date|date:'d.m.Y H:i'}}</p>
+</div>
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_table }}
-    <input type="submit" value="Submit">
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit">Wprowadź wynik</button>
 </form>
-<button class="clickable" onclick="location.href='/match/{{ match.id }}/'">Wroć do meczu</button>
+<button class="clickable navigable" onclick="location.href='/match/{{ match.id }}/'">Wroć do meczu</button>
+{% endblock %}

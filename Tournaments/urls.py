@@ -22,7 +22,7 @@ urlpatterns = [
     path("", TournamentListView.as_view(), name="main"),
     path("myTournaments/", organizer_tournaments_list, name="my_tournaments"),
     path("tournament/<pk>/", TournamentDetailView.as_view(), name="tournament"),
-    path("addTournament/", add_tournament),
+    path("addTournament/", add_tournament, name="add_tournament"),
     path("delTournament/<pk>/", del_tournament),
 
     path("tournament/<pk>/addParticipant/", add_participant),

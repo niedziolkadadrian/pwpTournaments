@@ -1,7 +1,14 @@
-<h1>{{ Tournament.name }}</h1>
-<p>{{ Tournament.description }}</p>
-<p>{{ Tournament.organizer.username }}</p>
-<p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
+{% extends "Tournaments/main.html" %}
+{% block title %}Mecz{% endblock %}
+
+
+{% block content %}
+<div class="tournament-info">
+    <h1>{{ Tournament.name }}</h1>
+    <p>Opis: <b>{{ Tournament.description }}</b></p>
+    <p>Organizowany przez: <b>{{ Tournament.organizer.username }}</b></p>
+    <p>Data turnieju: <b>{{ Tournament.date|date:'d.m.Y H:i' }}</b></p>
+</div>
 
 <h1>Dodawanie nowego meczu</h1>
 <form action="" method="post">
@@ -9,6 +16,7 @@
     <table>
         {{ form.as_table }}
     </table>
-    <input type="submit" value="Submit">
+    <button type="submit">Stwórz mecz</button>
 </form>
-<button class="clickable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+<button class="clickable navigable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+{% endblock %}

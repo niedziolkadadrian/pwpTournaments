@@ -15,7 +15,7 @@ class TournamentListView(ListView):
     model = Tournament
     template_name = "Tournaments/tournaments.html"
     queryset = Tournament.objects.all().order_by("-date")
-    extra_context = {"title": "Lista turnieji", "manage": False}
+    extra_context = {"title": "Lista turniejów", "manage": False}
 
 
 class TournamentDetailView(DetailView):
@@ -31,7 +31,7 @@ class MatchDetailView(DetailView):
 @login_required(login_url="login")
 def organizer_tournaments_list(request):
     queryset = Tournament.objects.filter(organizer=request.user).order_by("-date")
-    context = {"object_list": queryset, "title": "Lista turnieji organizowanych przez ciebie.", "manage": True}
+    context = {"object_list": queryset, "title": "Lista turniejów organizowanych przez ciebie.", "manage": True}
     return render(request, "Tournaments/tournaments.html", context=context)
 
 
@@ -44,7 +44,8 @@ def add_tournament(request):
             t = form.save()
             return redirect(f'/tournament/{t.id}/')
     else:
-        form = TournamentForm(initial={"date": datetime.datetime.now(), "organizer": request.user})
+        form = TournamentForm(initial={"date": datetime.datetime.now().replace(second=0),
+                                       "organizer": request.user})
     context = {"form": form}
     return render(request, "Tournaments/tournament_add.html", context)
 
@@ -148,7 +149,9 @@ def add_match(request, pk):
             messages.success(request, "Pomyślnie dodano mecz: " + str(m) + "!")
             return redirect("tournament", pk=pk)
     else:
-        form = MatchForm(tournament=tournament, initial={"date": datetime.datetime.now(), "tournament": pk})
+        form = MatchForm(tournament=tournament,
+                         initial={"date": datetime.datetime.now().replace(second=0),
+                                  "tournament": pk})
     context = {"form": form, "pk": pk, "Tournament": tournament}
     return render(request, "Tournaments/match_add.html", context)
 

@@ -1,11 +1,19 @@
+{% extends "Tournaments/main.html" %}
+{% block title %}Turniej{% endblock %}
+
+
+{% block content %}
 <h1>Usuwanie turnieju</h1>
 <p>Czy napewno chcesz usunać turniej?</p>
-<h1>{{ Tournament.name }}</h1>
-<p>{{ Tournament.description }}</p>
-<p>{{ Tournament.organizer.username }}</p>
-<p>{{ Tournament.date|date:'d.m.Y H:i' }}</p>
+<div class="tournament-info">
+    <h1>{{ Tournament.name }}</h1>
+    <p>Opis: <b>{{ Tournament.description }}</b></p>
+    <p>Organizowany przez: <b>{{ Tournament.organizer.username }}</b></p>
+    <p>Data turnieju: <b>{{ Tournament.date|date:'d.m.Y H:i' }}</b></p>
+</div>
 <form action="" method="post">
     {% csrf_token %}
-    <input type="submit" value="Submit">
+    <button type="submit">Usuń turniej</button>
 </form>
-<button class="clickable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+<button class="clickable navigable" onclick="location.href='/tournament/{{ Tournament.id }}/'">Wroć do turnieju</button>
+{% endblock %}
